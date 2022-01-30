@@ -1,0 +1,108 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+string add(string temp1, string temp2, int bitSize)
+{
+	string temp, charTemp1, charTemp2;
+	string carry = "0", zero = "0", one = "1";
+	for (int start = bitSize - 1; start >= 1; start--) 
+	{
+		charTemp1 = temp1[start];
+		if (charTemp1.compare(zero) == 0)
+		{
+			charTemp2 = temp2[start];
+			if (charTemp2.compare(zero) == 0)
+			{
+				if (carry.compare(zero) == 0)
+				{
+					temp.insert(0, zero);
+				}
+				else
+				{
+					temp.insert(0, one);
+					carry = zero;
+				}
+			}
+			else
+			{
+				if (carry.compare(zero) == 0)
+				{
+					temp.insert(0, one);
+				}
+				else
+				{
+					temp.insert(0, zero);
+					carry = one;
+				}
+			}
+		}
+		else
+		{
+			charTemp2 = temp2[start];
+			if (charTemp2.compare(zero) == 0)
+			{
+				if (carry.compare(zero) == 0)
+				{
+					temp.insert(0, one);
+				}
+				else
+				{
+					temp.insert(0, zero);
+					carry = one;
+				}
+			}
+			else
+			{
+				if (carry.compare(zero) == 0)
+				{
+					temp.insert(0, zero);
+					carry = one;
+				}
+				else
+				{
+					temp.insert(0, one);
+					carry = one;
+				}
+			}
+		}
+	}
+	if (carry.compare(one) == 0)
+	{
+		temp.insert(0, one);
+	}
+	else
+	{
+		temp.insert(0, zero);
+	}
+	return temp;
+}
+
+int main(void)
+{
+	
+	cout << "Enter the value of the first input." << endl;
+	string firstInput;  getline(cin, firstInput);
+	cout << "Enter the value of the second input." << endl;
+	string secondInput; getline(cin, secondInput);
+
+	cout << "Enter the bit size. (If you're not sure, give 8)" << endl;
+	int bitSize; cin >> bitSize;
+
+	while (firstInput.size() < bitSize)
+	{
+		firstInput.insert(0, "0");
+	}
+
+	while (secondInput.size() < bitSize)
+	{
+		secondInput.insert(0, "0");
+	}
+
+	cout << firstInput << endl;
+	cout << secondInput << endl;
+	
+	cout << "================" << endl;
+	cout << add(firstInput, secondInput, bitSize) << endl;
+}
